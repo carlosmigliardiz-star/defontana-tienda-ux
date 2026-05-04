@@ -204,6 +204,8 @@
       <button class="ctrl-btn" id="combo-c2" onclick="setCombo('c2')">C2 · Solo recurrente</button>
       <button class="ctrl-btn" id="combo-c3" onclick="setCombo('c3')">C3 · Solo pago único</button>
       <div class="ctrl-sep"></div>
+      <button class="ctrl-btn" onclick="showError()" style="border-color:#D92D20; color:#D92D20;">⚠ Simular error cobro suscrito</button>
+      <div class="ctrl-sep"></div>
       <span class="controls-label">Paso:</span>
       <button class="ctrl-btn active" id="step-btn-1" onclick="goStep(1)">① Carro</button>
       <button class="ctrl-btn" id="step-btn-2" onclick="goStep(2)">② Confirmar compra</button>
@@ -596,6 +598,41 @@
     hide(document.getElementById('view-3'));
   });
 
+
+  function showError() {
+    document.getElementById('error-overlay').style.display = 'flex';
+  }
+  function closeError() {
+    document.getElementById('error-overlay').style.display = 'none';
+  }
+  function showDfPay() {
+    document.getElementById('dfpay-overlay').style.display = 'flex';
+  }
+  function closeDfPay() {
+    document.getElementById('dfpay-overlay').style.display = 'none';
+  }
+  function selectDfPay(opt) {
+    var webpay = document.getElementById('dfpay-opt-webpay');
+    var df = document.getElementById('dfpay-opt-df');
+    var radioW = document.getElementById('radio-webpay');
+    var radioD = document.getElementById('radio-df');
+    if (opt === 'webpay') {
+      webpay.style.border = '2px solid #1E3A5F';
+      df.style.border = '1.5px solid #E2E2E2';
+      radioW.innerHTML = '<div style="width:6px;height:6px;border-radius:50%;background:#1E3A5F;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></div>';
+      radioW.style.background = '#1E3A5F'; radioW.style.borderColor = '#1E3A5F';
+      radioD.style.background = '#fff'; radioD.style.borderColor = '#E2E2E2';
+      radioD.innerHTML = '';
+    } else {
+      df.style.border = '2px solid #E8531A';
+      webpay.style.border = '1.5px solid #E2E2E2';
+      radioD.style.background = '#E8531A'; radioD.style.borderColor = '#E8531A';
+      radioD.innerHTML = '<div style="width:6px;height:6px;border-radius:50%;background:#fff;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></div>';
+      radioW.style.background = '#fff'; radioW.style.borderColor = '#E2E2E2';
+      radioW.innerHTML = '';
+    }
+  }
+
   function showSuccess(type) {
     var items = '';
     if (type === 'rec') {
@@ -691,6 +728,99 @@
         </div>
         <button onclick="closeSuccess()" style="background:#2D8A4E; border:none; color:#fff; border-radius:6px; padding:11px 32px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; display:block; margin:0 auto;">Aceptar</button>
       </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ERROR MODAL — Cobro suscrito fallido → opción DF PAY -->
+<div id="error-overlay" style="display:none; position:fixed; inset:0; background:rgba(20,30,50,0.55); z-index:998; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:20px; width:480px; max-width:95vw; padding:32px 32px 28px; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
+
+    <!-- Título -->
+    <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:16px;">
+      <div style="width:40px; height:40px; border-radius:50%; background:#FFF7ED; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#E8531A" stroke-width="1.8"/><path d="M12 8v4m0 4h.01" stroke="#E8531A" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <p style="font-size:16px; font-weight:700; color:#1A1A1A; margin:0 0 6px;">Tuvimos un inconveniente al procesar tu pago.</p>
+        <p style="font-size:13px; color:#4B4B4B; line-height:1.6; margin:0;">No se realizó ningún cobro. Puedes completar tu compra ahora usando <strong>DF Pay</strong> — con tarjeta bancaria o transferencia. El monto y las condiciones son exactamente los mismos.</p>
+      </div>
+    </div>
+
+    <!-- Detalle del cobro -->
+    <div style="background:#F4F6F9; border-radius:10px; padding:14px 16px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; font-size:13px; color:#4B4B4B; margin-bottom:6px;">
+        <span>Usuario Adicional ERP</span>
+        <span style="font-weight:600;">1,19 UF + IVA</span>
+      </div>
+      <div style="border-top:1px solid #E2E2E2; padding-top:8px; margin-top:4px; display:flex; justify-content:space-between; font-size:14px; font-weight:700; color:#1A1A1A;">
+        <span>Total a pagar</span>
+        <span>1,19 UF + IVA</span>
+      </div>
+    </div>
+
+    <!-- Nota factura mensual -->
+    <div style="background:#EBF3FF; border-radius:8px; padding:10px 14px; font-size:12px; color:#1A5FAD; line-height:1.6; margin-bottom:20px;">
+      Una vez confirmado el pago, el servicio quedará activo y recibirás una factura mensual cada <strong>día 25</strong> — igual que el modelo suscrito. Esta factura es <strong>adicional a tu factura de renovación mensual del plan.</strong>
+    </div>
+
+    <!-- Acciones -->
+    <div style="display:flex; justify-content:center;">
+      <button onclick="closeError(); showDfPay();" style="background:#E8531A; border:none; color:#fff; border-radius:24px; padding:12px 32px; font-size:14px; cursor:pointer; font-family:inherit; font-weight:600; width:100%;">Pagar con DF Pay</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- DF PAY MODAL — selección de medio de pago -->
+<div id="dfpay-overlay" style="display:none; position:fixed; inset:0; background:rgba(20,30,50,0.55); z-index:999; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:16px; width:560px; max-width:95vw; padding:32px 32px 28px; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
+
+    <p style="font-size:17px; font-weight:700; color:#1A1A1A; text-align:center; margin:0 0 4px;">Pago en línea</p>
+    <p style="font-size:13px; color:#7A7A7A; text-align:center; margin:0 0 24px;">¡Más fácil, más simple!</p>
+
+    <p style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:12px;">Selecciona tu medio de pago</p>
+
+    <div style="display:flex; gap:14px; margin-bottom:24px;">
+      <!-- Webpay -->
+      <div id="dfpay-opt-webpay" onclick="selectDfPay('webpay')" style="flex:1; border:1.5px solid #E2E2E2; border-radius:10px; padding:16px; cursor:pointer; text-align:center; transition:border 0.15s;">
+        <div style="font-size:11px; font-weight:700; color:#1E3A5F; letter-spacing:0.05em; margin-bottom:4px;">webpay<span style="font-size:9px;">PLUS</span></div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:8px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:#CC0000;"></div>
+          <span style="font-size:12px; font-weight:600; color:#CC0000;">Santander</span>
+        </div>
+        <div style="font-size:10px; color:#7A7A7A;">12 cuotas sin interés</div>
+        <div style="margin-top:10px; text-align:center;">
+          <div id="radio-webpay" style="width:16px; height:16px; border-radius:50%; border:2px solid #E2E2E2; display:inline-block;"></div>
+        </div>
+      </div>
+      <!-- DF Pay -->
+      <div id="dfpay-opt-df" onclick="selectDfPay('df')" style="flex:1; border:2px solid #E8531A; border-radius:10px; padding:16px; cursor:pointer; text-align:center; transition:border 0.15s;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:12px; margin-top:8px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#E8531A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:16px; font-weight:700; color:#E8531A;">Pay</span>
+          <span style="font-size:10px; color:#7A7A7A; margin-top:2px;">defontana</span>
+        </div>
+        <div style="margin-top:10px; text-align:center;">
+          <div id="radio-df" style="width:16px; height:16px; border-radius:50%; border:2px solid #E8531A; background:#E8531A; display:inline-block; position:relative;">
+            <div style="width:6px; height:6px; border-radius:50%; background:#fff; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumen -->
+    <div style="border-top:1px solid #E2E2E2; padding-top:14px; margin-bottom:20px;">
+      <div style="display:flex; justify-content:space-between; font-size:12px; color:#7A7A7A; margin-bottom:4px;"><span>Descuento</span><span>0</span></div>
+      <div style="display:flex; justify-content:space-between; font-size:12px; color:#7A7A7A; margin-bottom:4px;"><span>Subtotal</span><span>1 UF</span></div>
+      <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:700; color:#1A1A1A; margin-top:6px;"><span>Total a pagar</span><span>1,19 UF <span style="font-size:11px; font-weight:400; color:#7A7A7A;">(+ IVA)</span></span></div>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; gap:12px;">
+      <button onclick="closeDfPay()" style="background:transparent; border:1.5px solid #E2E2E2; color:#4B4B4B; border-radius:24px; padding:10px 24px; font-size:13px; cursor:pointer; font-family:inherit;">Cancelar</button>
+      <button onclick="closeDfPay(); showSuccess('rec');" style="background:#E8531A; border:none; color:#fff; border-radius:24px; padding:10px 24px; font-size:13px; cursor:pointer; font-family:inherit; font-weight:600;">Continuar</button>
     </div>
 
   </div>
