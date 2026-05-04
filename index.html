@@ -386,7 +386,7 @@
             <div class="conf-row"><span>Subtotal recurrente</span><span>1,00 UF</span></div>
             <div class="conf-row"><span style="color:var(--df-text-muted);">Descuento</span><span>0 UF</span></div>
             <div class="conf-row"><span style="color:var(--df-text-muted);">Impuesto</span><span>0,19 UF</span></div>
-            <div class="conf-row bold"><span>Total recurrente</span><span>1,19 UF + IVA</span></div>
+            <div class="conf-row bold"><span>Total recurrente</span><span>1,19 UF</span></div>
             <div style="height:10px;"></div>
             <div class="conf-row"><span>Subtotal pago único</span><span>4,00 UF</span></div>
             <div class="conf-row"><span style="color:var(--df-text-muted);">Descuento</span><span>0 UF</span></div>
@@ -399,7 +399,7 @@
             <div class="conf-row"><span>Subtotal recurrente</span><span>1,00 UF</span></div>
             <div class="conf-row"><span style="color:var(--df-text-muted);">Descuento</span><span>0 UF</span></div>
             <div class="conf-row"><span style="color:var(--df-text-muted);">Impuesto</span><span>0,19 UF</span></div>
-            <div class="conf-row grand"><span>Total recurrente</span><span>1,19 UF + IVA</span></div>
+            <div class="conf-row grand"><span>Total recurrente</span><span>1,19 UF</span></div>
           </div>
           <!-- C3 summary -->
           <div id="sum-c3" style="display:none">
@@ -631,6 +631,20 @@
 
 
   function showSaldo() {
+    var combo = currentCombo;
+    var items, total;
+    if (combo === 'c1') {
+      items = '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #E2E2E2;"><span style="font-size:13px;color:#4B4B4B;">Pago mensual recurrente <span style="font-size:10px;font-weight:600;background:#EBF3FF;color:#1A5FAD;padding:1px 7px;border-radius:8px;margin-left:6px;">Mensual</span></span><span style="font-size:13px;font-weight:600;color:#1A1A1A;">1 UF <span style="font-size:10px;font-weight:400;color:#7A7A7A;">+ IVA (0,19 UF)</span></span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#4B4B4B;">Pago único <span style="font-size:10px;font-weight:600;background:#FFF4E0;color:#9A5E00;padding:1px 7px;border-radius:8px;margin-left:6px;">Pago único</span></span><span style="font-size:13px;font-weight:600;color:#1A1A1A;">4 UF <span style="font-size:10px;font-weight:400;color:#7A7A7A;">+ IVA (0,76 UF)</span></span></div>';
+      total = '5,95 UF';
+    } else if (combo === 'c2') {
+      items = '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#4B4B4B;">Pago mensual recurrente <span style="font-size:10px;font-weight:600;background:#EBF3FF;color:#1A5FAD;padding:1px 7px;border-radius:8px;margin-left:6px;">Mensual</span></span><span style="font-size:13px;font-weight:600;color:#1A1A1A;">1 UF <span style="font-size:10px;font-weight:400;color:#7A7A7A;">+ IVA (0,19 UF)</span></span></div>';
+      total = '1,19 UF';
+    } else {
+      items = '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#4B4B4B;">Pago único <span style="font-size:10px;font-weight:600;background:#FFF4E0;color:#9A5E00;padding:1px 7px;border-radius:8px;margin-left:6px;">Pago único</span></span><span style="font-size:13px;font-weight:600;color:#1A1A1A;">4 UF <span style="font-size:10px;font-weight:400;color:#7A7A7A;">+ IVA (0,76 UF)</span></span></div>';
+      total = '4,76 UF';
+    }
+    document.getElementById('saldo-items').innerHTML = items;
+    document.getElementById('saldo-total').innerHTML = total;
     document.getElementById('saldo-overlay').style.display = 'flex';
   }
   function closeSaldo() {
@@ -645,35 +659,26 @@
 
   function showError() {
     var combo = currentCombo;
-    var items = '';
-    var total = '';
-    var nota = '';
-
+    var items, total, nota;
     if (combo === 'c1') {
-      items = '<div style="display:flex;justify-content:space-between;font-size:13px;color:#4B4B4B;margin-bottom:6px;"><span>Usuario Adicional ERP <span style="font-size:10px;font-weight:600;background:#EBF3FF;color:#1A5FAD;padding:1px 7px;border-radius:8px;margin-left:4px;">Mensual</span></span><span style="font-weight:600;">1,19 UF + IVA</span></div>' +
-              '<div style="display:flex;justify-content:space-between;font-size:13px;color:#4B4B4B;"><span>Sesión Online 45 min <span style="font-size:10px;font-weight:600;background:#FFF4E0;color:#9A5E00;padding:1px 7px;border-radius:8px;margin-left:4px;">Pago único</span></span><span style="font-weight:600;">4,76 UF + IVA</span></div>';
-      total = '5,95 UF + IVA';
-      nota = 'El servicio mensual quedará activo y recibirás una factura mensual cada <strong>día 25</strong> — igual que el modelo suscrito. Esta factura es <strong>adicional a tu factura de renovación mensual del plan.</strong>';
+      items = '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #E2E2E2;"><span style="font-size:13px;color:#4B4B4B;">Pago mensual recurrente <span style="font-size:10px;font-weight:600;background:#EBF3FF;color:#1A5FAD;padding:1px 7px;border-radius:8px;margin-left:6px;">Mensual</span></span><span style="font-size:13px;font-weight:600;color:#1A1A1A;">1 UF <span style="font-size:10px;font-weight:400;color:#7A7A7A;">+ IVA (0,19 UF)</span></span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#4B4B4B;">Pago único <span style="font-size:10px;font-weight:600;background:#FFF4E0;color:#9A5E00;padding:1px 7px;border-radius:8px;margin-left:6px;">Pago único</span></span><span style="font-size:13px;font-weight:600;color:#1A1A1A;">4 UF <span style="font-size:10px;font-weight:400;color:#7A7A7A;">+ IVA (0,76 UF)</span></span></div>';
+      total = '5,95 UF';
+      nota  = 'El servicio mensual quedará activo y recibirás una factura mensual cada <strong>día 25</strong> — igual que el modelo suscrito. Esta factura es <strong>adicional a tu factura de renovación mensual del plan.</strong>';
     } else if (combo === 'c2') {
-      items = '<div style="display:flex;justify-content:space-between;font-size:13px;color:#4B4B4B;"><span>Usuario Adicional ERP <span style="font-size:10px;font-weight:600;background:#EBF3FF;color:#1A5FAD;padding:1px 7px;border-radius:8px;margin-left:4px;">Mensual</span></span><span style="font-weight:600;">1,19 UF + IVA</span></div>';
-      total = '1,19 UF + IVA';
-      nota = 'El servicio quedará activo y recibirás una factura mensual cada <strong>día 25</strong> — igual que el modelo suscrito. Esta factura es <strong>adicional a tu factura de renovación mensual del plan.</strong>';
+      items = '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#4B4B4B;">Pago mensual recurrente <span style="font-size:10px;font-weight:600;background:#EBF3FF;color:#1A5FAD;padding:1px 7px;border-radius:8px;margin-left:6px;">Mensual</span></span><span style="font-size:13px;font-weight:600;color:#1A1A1A;">1 UF <span style="font-size:10px;font-weight:400;color:#7A7A7A;">+ IVA (0,19 UF)</span></span></div>';
+      total = '1,19 UF';
+      nota  = 'El servicio quedará activo y recibirás una factura mensual cada <strong>día 25</strong> — igual que el modelo suscrito. Esta factura es <strong>adicional a tu factura de renovación mensual del plan.</strong>';
     } else {
-      items = '<div style="display:flex;justify-content:space-between;font-size:13px;color:#4B4B4B;"><span>Sesión Online 45 min <span style="font-size:10px;font-weight:600;background:#FFF4E0;color:#9A5E00;padding:1px 7px;border-radius:8px;margin-left:4px;">Pago único</span></span><span style="font-weight:600;">4,76 UF + IVA</span></div>';
-      total = '4,76 UF + IVA';
-      nota = 'Una vez confirmado el pago, el servicio quedará activo y recibirás la factura de inmediato a tu correo.';
+      items = '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#4B4B4B;">Pago único <span style="font-size:10px;font-weight:600;background:#FFF4E0;color:#9A5E00;padding:1px 7px;border-radius:8px;margin-left:6px;">Pago único</span></span><span style="font-size:13px;font-weight:600;color:#1A1A1A;">4 UF <span style="font-size:10px;font-weight:400;color:#7A7A7A;">+ IVA (0,76 UF)</span></span></div>';
+      total = '4,76 UF';
+      nota  = 'Una vez confirmado el pago, el servicio quedará activo y recibirás la factura de inmediato a tu correo.';
     }
-
     document.getElementById('error-items').innerHTML = items;
     document.getElementById('error-total').innerHTML = total;
-    document.getElementById('error-nota').innerHTML = nota;
-
-    // Update dfpay modal total too
+    document.getElementById('error-nota').innerHTML  = nota;
     document.getElementById('dfpay-total').innerHTML = total;
-
-    var labels = {'c1':'C1 · Recurrente + Único', 'c2':'C2 · Solo recurrente', 'c3':'C3 · Solo pago único'};
+    var labels = {'c1':'C1 · Recurrente + Único','c2':'C2 · Solo recurrente','c3':'C3 · Solo pago único'};
     document.getElementById('error-combo-label').innerHTML = '⚙ Combinación: ' + labels[combo];
-
     document.getElementById('error-overlay').style.display = 'flex';
   }
   function closeError() {
@@ -712,10 +717,10 @@
     if (type === 'rec') {
       var isC1 = document.getElementById('mod-c1') && document.getElementById('mod-c1').style.display !== 'none';
       if (isC1) {
-        items = '<tr style="border-bottom:1px solid #E2E2E2;"><td style="padding:10px 14px;">Usuario Adicional ERP</td><td style="text-align:center;padding:10px 14px;">1</td><td style="text-align:right;padding:10px 14px;font-weight:600;">1,19 UF + IVA</td></tr>' +
+        items = '<tr style="border-bottom:1px solid #E2E2E2;"><td style="padding:10px 14px;">Usuario Adicional ERP</td><td style="text-align:center;padding:10px 14px;">1</td><td style="text-align:right;padding:10px 14px;font-weight:600;">1,19 UF</td></tr>' +
                 '<tr><td style="padding:10px 14px;">Sesión Online de 45 Minutos</td><td style="text-align:center;padding:10px 14px;">1</td><td style="text-align:right;padding:10px 14px;font-weight:600;">4,76 UF + IVA</td></tr>';
       } else {
-        items = '<tr><td style="padding:10px 14px;">Usuario Adicional ERP</td><td style="text-align:center;padding:10px 14px;">1</td><td style="text-align:right;padding:10px 14px;font-weight:600;">1,19 UF + IVA</td></tr>';
+        items = '<tr><td style="padding:10px 14px;">Usuario Adicional ERP</td><td style="text-align:center;padding:10px 14px;">1</td><td style="text-align:right;padding:10px 14px;font-weight:600;">1,19 UF</td></tr>';
       }
     } else {
       items = '<tr><td style="padding:10px 14px;">Sesión Online de 45 Minutos</td><td style="text-align:center;padding:10px 14px;">1</td><td style="text-align:right;padding:10px 14px;font-weight:600;">4,76 UF + IVA</td></tr>';
@@ -831,7 +836,7 @@
       <div id="error-items"></div>
       <div style="border-top:1px solid #E2E2E2; padding-top:8px; margin-top:4px; display:flex; justify-content:space-between; font-size:14px; font-weight:700; color:#1A1A1A;">
         <span>Total a pagar</span>
-        <span id="error-total">1,19 UF + IVA</span>
+        <span id="error-total">1,19 UF</span>
       </div>
     </div>
 
@@ -890,7 +895,7 @@
     <div style="border-top:1px solid #E2E2E2; padding-top:14px; margin-bottom:20px;">
       <div style="display:flex; justify-content:space-between; font-size:12px; color:#7A7A7A; margin-bottom:4px;"><span>Descuento</span><span>0</span></div>
       <div style="display:flex; justify-content:space-between; font-size:12px; color:#7A7A7A; margin-bottom:4px;"><span>Subtotal</span><span>1 UF</span></div>
-      <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:700; color:#1A1A1A; margin-top:6px;"><span>Total a pagar</span><span id="dfpay-total">1,19 UF + IVA</span></div>
+      <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:700; color:#1A1A1A; margin-top:6px;"><span>Total a pagar</span><span id="dfpay-total">1,19 UF</span></div>
     </div>
 
     <div style="display:flex; justify-content:flex-end; gap:12px;">
@@ -917,16 +922,24 @@
       </div>
     </div>
 
+    <!-- Detalle servicios dinámico -->
+    <div style="background:#F4F6F9; border-radius:10px; padding:4px 14px; margin-bottom:12px;">
+      <div id="saldo-items"></div>
+      <div style="border-top:1px solid #E2E2E2; padding:8px 0 4px; display:flex; justify-content:space-between; font-size:14px; font-weight:700; color:#1A1A1A;">
+        <span>Total a pagar</span>
+        <span id="saldo-total">—</span>
+      </div>
+    </div>
     <!-- Tarjeta actual -->
-    <div style="background:#F4F6F9; border-radius:10px; padding:12px 16px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between;">
+    <div style="background:#FDECEA; border-radius:10px; padding:10px 14px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;">
       <div style="display:flex; align-items:center; gap:10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#7A7A7A" stroke-width="1.8"/><path d="M2 10h20" stroke="#7A7A7A" stroke-width="1.8"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#D92D20" stroke-width="1.8"/><path d="M2 10h20" stroke="#D92D20" stroke-width="1.8"/></svg>
         <div>
-          <div style="font-size:12px; color:#7A7A7A;">Tarjeta suscrita</div>
+          <div style="font-size:11px; color:#D92D20;">Tarjeta suscrita · Sin fondos suficientes</div>
           <div style="font-size:13px; font-weight:600; color:#1A1A1A;">Visa •••• 4821</div>
         </div>
       </div>
-      <span style="font-size:11px; font-weight:600; background:#FDECEA; color:#D92D20; padding:3px 10px; border-radius:20px;">Sin fondos</span>
+      <span style="font-size:11px; font-weight:600; background:#fff; color:#D92D20; padding:3px 10px; border-radius:20px; border:1px solid #D92D20;">Sin fondos</span>
     </div>
 
     <!-- Nota -->
