@@ -205,6 +205,7 @@
       <button class="ctrl-btn" id="combo-c3" onclick="setCombo('c3')">C3 · Solo pago único</button>
       <div class="ctrl-sep"></div>
       <button class="ctrl-btn" onclick="showError()" style="border-color:#D92D20; color:#D92D20;">⚠ Simular error cobro suscrito</button>
+      <button class="ctrl-btn" onclick="showSaldo()" style="border-color:#B54708; color:#B54708;">💳 Simular saldo insuficiente</button>
       <div class="ctrl-sep"></div>
       <span class="controls-label">Paso:</span>
       <button class="ctrl-btn active" id="step-btn-1" onclick="goStep(1)">① Carro</button>
@@ -434,14 +435,27 @@
         <div id="mod-c1">
           <div class="modal-box" >
             <div class="modal-title" style="font-size:17px;">Confirma tu compra</div>
-            <div class="modal-item">
-              <div><div class="modal-item-name">Usuario Adicional ERP</div><span class="badge badge-rec">Mensual</span></div>
-              <div class="modal-item-price">1,19 UF</div>
+
+          <div style="background:#F4F6F9; border-radius:10px; padding:4px 14px; margin-bottom:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #E2E2E2;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4v5h.582M20 20v-5h-.581M5.077 9A9 9 0 0119.938 15M4.062 9A9 9 0 0118.923 15" stroke="#1A5FAD" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span style="font-size:13px; color:#4B4B4B;">Pago mensual recurrente</span>
             </div>
-            <div class="modal-item">
-              <div><div class="modal-item-name">Sesión Online de 45 Minutos</div><span class="badge badge-one">Pago único</span></div>
-              <div class="modal-item-price">4,76 UF</div>
+            <div style="text-align:right;">
+              <div style="font-size:13px; font-weight:600; color:#1A1A1A;">1 UF <span style="font-size:10px; font-weight:400; color:#7A7A7A;">+ IVA (0,19 UF)</span></div>
             </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#9A5E00" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="#9A5E00" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span style="font-size:13px; color:#4B4B4B;">Pago único</span>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:13px; font-weight:600; color:#1A1A1A;">4 UF <span style="font-size:10px; font-weight:400; color:#7A7A7A;">+ IVA (0,76 UF)</span></div>
+            </div>
+          </div>
+          </div>
             <div class="billing-block">
               <div class="billing-label">Hoy</div>
               <div style="display:flex; justify-content:space-between; align-items:baseline;">
@@ -476,10 +490,18 @@
         <div id="mod-c2" style="display:none">
           <div class="modal-box" >
             <div class="modal-title" style="font-size:17px;">Confirma tu compra recurrente</div>
-            <div class="modal-item">
-              <div><div class="modal-item-name">Usuario Adicional ERP</div><span class="badge badge-rec">Mensual</span></div>
-              <div class="modal-item-price">1,19 UF</div>
+
+          <div style="background:#F4F6F9; border-radius:10px; padding:4px 14px; margin-bottom:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #E2E2E2;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4v5h.582M20 20v-5h-.581M5.077 9A9 9 0 0119.938 15M4.062 9A9 9 0 0118.923 15" stroke="#1A5FAD" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span style="font-size:13px; color:#4B4B4B;">Pago mensual recurrente</span>
             </div>
+            <div style="text-align:right;">
+              <div style="font-size:13px; font-weight:600; color:#1A1A1A;">1 UF <span style="font-size:10px; font-weight:400; color:#7A7A7A;">+ IVA (0,19 UF)</span></div>
+            </div>
+          </div>
+          </div>
             <div class="billing-block">
               <div class="billing-label">Hoy</div>
               <div style="display:flex; justify-content:space-between; align-items:baseline;">
@@ -514,10 +536,18 @@
         <div id="mod-c3" style="display:none">
           <div class="modal-box" >
             <div class="modal-title" style="font-size:17px;">Confirma tu compra</div>
-            <div class="modal-item">
-              <div><div class="modal-item-name">Sesión Online de 45 Minutos</div><span class="badge badge-one">Pago único</span></div>
-              <div class="modal-item-price">4,76 UF</div>
+
+          <div style="background:#F4F6F9; border-radius:10px; padding:4px 14px; margin-bottom:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#9A5E00" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="#9A5E00" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span style="font-size:13px; color:#4B4B4B;">Pago único</span>
             </div>
+            <div style="text-align:right;">
+              <div style="font-size:13px; font-weight:600; color:#1A1A1A;">4 UF <span style="font-size:10px; font-weight:400; color:#7A7A7A;">+ IVA (0,76 UF)</span></div>
+            </div>
+          </div>
+          </div>
             <div class="billing-block">
               <div class="billing-label">Hoy</div>
               <div style="display:flex; justify-content:space-between; align-items:baseline;">
@@ -598,6 +628,20 @@
     hide(document.getElementById('view-3'));
   });
 
+
+
+  function showSaldo() {
+    document.getElementById('saldo-overlay').style.display = 'flex';
+  }
+  function closeSaldo() {
+    document.getElementById('saldo-overlay').style.display = 'none';
+  }
+  function showSuscripcion() {
+    document.getElementById('suscripcion-overlay').style.display = 'flex';
+  }
+  function closeSuscripcion() {
+    document.getElementById('suscripcion-overlay').style.display = 'none';
+  }
 
   function showError() {
     var combo = currentCombo;
@@ -765,7 +809,7 @@
 
 
 <!-- ERROR MODAL — Cobro suscrito fallido → opción DF PAY -->
-<div id="error-overlay" style="display:none; position:fixed; inset:0; background:rgba(20,30,50,0.55); z-index:998; align-items:center; justify-content:center;">
+<div id="error-overlay" onclick="if(event.target===this)closeError();" style="display:none; position:fixed; inset:0; background:rgba(20,30,50,0.55); z-index:998; align-items:center; justify-content:center;">
   <div style="background:#fff; border-radius:20px; width:480px; max-width:95vw; padding:32px 32px 28px; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
 
     <!-- Etiqueta combinación activa -->
@@ -797,8 +841,9 @@
     </div>
 
     <!-- Acciones -->
-    <div style="display:flex; justify-content:center;">
+    <div style="display:flex; flex-direction:column; gap:10px;">
       <button onclick="closeError(); showDfPay();" style="background:#E8531A; border:none; color:#fff; border-radius:24px; padding:12px 32px; font-size:14px; cursor:pointer; font-family:inherit; font-weight:600; width:100%;">Pagar con DF Pay</button>
+      <button onclick="closeError();" style="background:transparent; border:none; color:#7A7A7A; font-size:13px; cursor:pointer; font-family:inherit; padding:6px; text-decoration:underline;">Cancelar</button>
     </div>
 
   </div>
@@ -851,6 +896,94 @@
     <div style="display:flex; justify-content:flex-end; gap:12px;">
       <button onclick="closeDfPay()" style="background:transparent; border:1.5px solid #E2E2E2; color:#4B4B4B; border-radius:24px; padding:10px 24px; font-size:13px; cursor:pointer; font-family:inherit;">Cancelar</button>
       <button onclick="closeDfPay(); showSuccess('rec');" style="background:#E8531A; border:none; color:#fff; border-radius:24px; padding:10px 24px; font-size:13px; cursor:pointer; font-family:inherit; font-weight:600;">Continuar</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- SALDO INSUFICIENTE MODAL -->
+<div id="saldo-overlay" onclick="if(event.target===this)closeSaldo();" style="display:none; position:fixed; inset:0; background:rgba(20,30,50,0.55); z-index:998; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:20px; width:460px; max-width:95vw; padding:32px 32px 28px; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
+
+    <!-- Ícono + título -->
+    <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:16px;">
+      <div style="width:40px; height:40px; border-radius:50%; background:#FFF4E0; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#B54708" stroke-width="1.8"/><path d="M2 10h20" stroke="#B54708" stroke-width="1.8"/><path d="M6 15h4" stroke="#B54708" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <p style="font-size:16px; font-weight:700; color:#1A1A1A; margin:0 0 6px;">No fue posible completar el cobro.</p>
+        <p style="font-size:13px; color:#4B4B4B; line-height:1.6; margin:0;">Tu tarjeta suscrita no tiene fondos suficientes para procesar este pago. No se realizó ningún cargo a tu cuenta.</p>
+      </div>
+    </div>
+
+    <!-- Tarjeta actual -->
+    <div style="background:#F4F6F9; border-radius:10px; padding:12px 16px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#7A7A7A" stroke-width="1.8"/><path d="M2 10h20" stroke="#7A7A7A" stroke-width="1.8"/></svg>
+        <div>
+          <div style="font-size:12px; color:#7A7A7A;">Tarjeta suscrita</div>
+          <div style="font-size:13px; font-weight:600; color:#1A1A1A;">Visa •••• 4821</div>
+        </div>
+      </div>
+      <span style="font-size:11px; font-weight:600; background:#FDECEA; color:#D92D20; padding:3px 10px; border-radius:20px;">Sin fondos</span>
+    </div>
+
+    <!-- Nota -->
+    <div style="background:#FFF4E0; border-radius:8px; padding:10px 14px; font-size:12px; color:#92400E; line-height:1.6; margin-bottom:20px;">
+      Para completar la compra, actualiza tu tarjeta suscrita. Una vez actualizada, podrás continuar desde el carrito con los servicios que seleccionaste.
+    </div>
+
+    <!-- Acciones -->
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <button onclick="closeSaldo(); showSuscripcion();" style="background:#E8531A; border:none; color:#fff; border-radius:24px; padding:12px; font-size:14px; cursor:pointer; font-family:inherit; font-weight:600; width:100%;">Actualizar tarjeta suscrita</button>
+      <button onclick="closeSaldo();" style="background:transparent; border:none; color:#7A7A7A; font-size:13px; cursor:pointer; font-family:inherit; padding:6px; text-decoration:underline;">Cancelar</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUSCRIPCIÓN MODAL — réplica de Facturación y pagos -->
+<div id="suscripcion-overlay" onclick="if(event.target===this)closeSuscripcion();" style="display:none; position:fixed; inset:0; background:rgba(20,30,50,0.55); z-index:999; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:20px; width:560px; max-width:95vw; padding:36px 36px 28px; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
+
+    <p style="font-size:22px; font-weight:700; color:#1A1A1A; margin:0 0 24px;">Suscripción</p>
+
+    <!-- Filas de datos -->
+    <div style="display:flex; flex-direction:column; gap:0;">
+      <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #E2E2E2;">
+        <span style="font-size:13px; color:#7A7A7A;">Tipo Suscripción</span>
+        <span style="font-size:13px; font-weight:600; color:#1A1A1A;">Renovación Plan (Webpay Oneclick)</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #E2E2E2; align-items:flex-start;">
+        <span style="font-size:13px; color:#7A7A7A;">Descripción</span>
+        <span style="font-size:13px; font-weight:600; color:#1A1A1A; text-align:right; max-width:280px;">Pago automático en cada fecha de renovación de su plan</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #E2E2E2;">
+        <span style="font-size:13px; color:#7A7A7A;">Email suscrito</span>
+        <span style="font-size:13px; font-weight:600; color:#1A1A1A;">usuario@empresa.com</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #E2E2E2; align-items:center;">
+        <span style="font-size:13px; color:#7A7A7A;">Estado</span>
+        <span style="font-size:12px; font-weight:600; background:#E6F9F0; color:#1A7A4A; padding:4px 14px; border-radius:20px;">Suscrito</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #E2E2E2;">
+        <span style="font-size:13px; color:#7A7A7A;">Tarjeta de crédito</span>
+        <span style="font-size:13px; font-weight:600; color:#1A1A1A;">Visa</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:12px 0;">
+        <span style="font-size:13px; color:#7A7A7A;">Últimos dígitos tarjeta de crédito</span>
+        <span style="font-size:13px; font-weight:600; color:#1A1A1A;">XXXXXXXXXXXXXXX4821</span>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:28px; gap:12px; flex-wrap:wrap;">
+      <button onclick="closeSuscripcion(); showSaldo();" style="background:transparent; border:1.5px solid #E2E2E2; color:#4B4B4B; border-radius:24px; padding:10px 24px; font-size:13px; cursor:pointer; font-family:inherit;">Volver</button>
+      <div style="display:flex; gap:10px;">
+        <button onclick="closeSuscripcion();" style="background:#D92D20; border:none; color:#fff; border-radius:24px; padding:10px 20px; font-size:13px; cursor:pointer; font-family:inherit; font-weight:600;">Cancelar suscripción</button>
+        <button onclick="closeSuscripcion(); goStep(1); alert('La tarjeta ha sido actualizada. Tus servicios siguen en el carrito, puedes continuar con la compra.');" style="background:#E8531A; border:none; color:#fff; border-radius:24px; padding:10px 20px; font-size:13px; cursor:pointer; font-family:inherit; font-weight:600;">Cambiar tarjeta de crédito</button>
+      </div>
     </div>
 
   </div>
