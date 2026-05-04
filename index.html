@@ -600,6 +600,36 @@
 
 
   function showError() {
+    var combo = currentCombo;
+    var items = '';
+    var total = '';
+    var nota = '';
+
+    if (combo === 'c1') {
+      items = '<div style="display:flex;justify-content:space-between;font-size:13px;color:#4B4B4B;margin-bottom:6px;"><span>Usuario Adicional ERP <span style="font-size:10px;font-weight:600;background:#EBF3FF;color:#1A5FAD;padding:1px 7px;border-radius:8px;margin-left:4px;">Mensual</span></span><span style="font-weight:600;">1,19 UF + IVA</span></div>' +
+              '<div style="display:flex;justify-content:space-between;font-size:13px;color:#4B4B4B;"><span>Sesión Online 45 min <span style="font-size:10px;font-weight:600;background:#FFF4E0;color:#9A5E00;padding:1px 7px;border-radius:8px;margin-left:4px;">Pago único</span></span><span style="font-weight:600;">4,76 UF + IVA</span></div>';
+      total = '5,95 UF + IVA';
+      nota = 'El servicio mensual quedará activo y recibirás una factura mensual cada <strong>día 25</strong> — igual que el modelo suscrito. Esta factura es <strong>adicional a tu factura de renovación mensual del plan.</strong>';
+    } else if (combo === 'c2') {
+      items = '<div style="display:flex;justify-content:space-between;font-size:13px;color:#4B4B4B;"><span>Usuario Adicional ERP <span style="font-size:10px;font-weight:600;background:#EBF3FF;color:#1A5FAD;padding:1px 7px;border-radius:8px;margin-left:4px;">Mensual</span></span><span style="font-weight:600;">1,19 UF + IVA</span></div>';
+      total = '1,19 UF + IVA';
+      nota = 'El servicio quedará activo y recibirás una factura mensual cada <strong>día 25</strong> — igual que el modelo suscrito. Esta factura es <strong>adicional a tu factura de renovación mensual del plan.</strong>';
+    } else {
+      items = '<div style="display:flex;justify-content:space-between;font-size:13px;color:#4B4B4B;"><span>Sesión Online 45 min <span style="font-size:10px;font-weight:600;background:#FFF4E0;color:#9A5E00;padding:1px 7px;border-radius:8px;margin-left:4px;">Pago único</span></span><span style="font-weight:600;">4,76 UF + IVA</span></div>';
+      total = '4,76 UF + IVA';
+      nota = 'Una vez confirmado el pago, el servicio quedará activo y recibirás la factura de inmediato a tu correo.';
+    }
+
+    document.getElementById('error-items').innerHTML = items;
+    document.getElementById('error-total').innerHTML = total;
+    document.getElementById('error-nota').innerHTML = nota;
+
+    // Update dfpay modal total too
+    document.getElementById('dfpay-total').innerHTML = total;
+
+    var labels = {'c1':'C1 · Recurrente + Único', 'c2':'C2 · Solo recurrente', 'c3':'C3 · Solo pago único'};
+    document.getElementById('error-combo-label').innerHTML = '⚙ Combinación: ' + labels[combo];
+
     document.getElementById('error-overlay').style.display = 'flex';
   }
   function closeError() {
@@ -738,6 +768,9 @@
 <div id="error-overlay" style="display:none; position:fixed; inset:0; background:rgba(20,30,50,0.55); z-index:998; align-items:center; justify-content:center;">
   <div style="background:#fff; border-radius:20px; width:480px; max-width:95vw; padding:32px 32px 28px; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
 
+    <!-- Etiqueta combinación activa -->
+    <div id="error-combo-label" style="display:inline-flex; align-items:center; background:#F4F6F9; border-radius:20px; padding:3px 12px; font-size:11px; font-weight:600; color:#7A7A7A; margin-bottom:12px; letter-spacing:0.03em;"></div>
+
     <!-- Título -->
     <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:16px;">
       <div style="width:40px; height:40px; border-radius:50%; background:#FFF7ED; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
@@ -749,20 +782,17 @@
       </div>
     </div>
 
-    <!-- Detalle del cobro -->
+    <!-- Detalle del cobro — dinámico según combinación -->
     <div style="background:#F4F6F9; border-radius:10px; padding:14px 16px; margin-bottom:16px;">
-      <div style="display:flex; justify-content:space-between; font-size:13px; color:#4B4B4B; margin-bottom:6px;">
-        <span>Usuario Adicional ERP</span>
-        <span style="font-weight:600;">1,19 UF + IVA</span>
-      </div>
+      <div id="error-items"></div>
       <div style="border-top:1px solid #E2E2E2; padding-top:8px; margin-top:4px; display:flex; justify-content:space-between; font-size:14px; font-weight:700; color:#1A1A1A;">
         <span>Total a pagar</span>
-        <span>1,19 UF + IVA</span>
+        <span id="error-total">1,19 UF + IVA</span>
       </div>
     </div>
 
-    <!-- Nota factura mensual -->
-    <div style="background:#EBF3FF; border-radius:8px; padding:10px 14px; font-size:12px; color:#1A5FAD; line-height:1.6; margin-bottom:20px;">
+    <!-- Nota factura mensual — dinámica -->
+    <div style="background:#EBF3FF; border-radius:8px; padding:10px 14px; font-size:12px; color:#1A5FAD; line-height:1.6; margin-bottom:20px;" id="error-nota">
       Una vez confirmado el pago, el servicio quedará activo y recibirás una factura mensual cada <strong>día 25</strong> — igual que el modelo suscrito. Esta factura es <strong>adicional a tu factura de renovación mensual del plan.</strong>
     </div>
 
@@ -815,7 +845,7 @@
     <div style="border-top:1px solid #E2E2E2; padding-top:14px; margin-bottom:20px;">
       <div style="display:flex; justify-content:space-between; font-size:12px; color:#7A7A7A; margin-bottom:4px;"><span>Descuento</span><span>0</span></div>
       <div style="display:flex; justify-content:space-between; font-size:12px; color:#7A7A7A; margin-bottom:4px;"><span>Subtotal</span><span>1 UF</span></div>
-      <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:700; color:#1A1A1A; margin-top:6px;"><span>Total a pagar</span><span>1,19 UF <span style="font-size:11px; font-weight:400; color:#7A7A7A;">(+ IVA)</span></span></div>
+      <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:700; color:#1A1A1A; margin-top:6px;"><span>Total a pagar</span><span id="dfpay-total">1,19 UF + IVA</span></div>
     </div>
 
     <div style="display:flex; justify-content:flex-end; gap:12px;">
